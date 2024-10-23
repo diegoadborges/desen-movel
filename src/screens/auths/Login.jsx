@@ -1,14 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text, TextInput, Pressable, TouchableHighlight, ImageBackground, Alert } from 'react-native';
-import axios from 'axios';
-import SweetAlert from 'react-native-sweet-alert';
 
 function LoginScreen({ navigation }) {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
   const [isEmailActive, setIsEmailActive] = useState(false);
   const [isPasswordActive, setIsPasswordActive] = useState(false);
-  const { setToken, setUser } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const inputEmailStyle = isEmailActive ? styles.inputActive : styles.input;
@@ -17,38 +14,13 @@ function LoginScreen({ navigation }) {
   const handleLogin = () => {
     setIsLoading(true);
 
-    axios
-      .post('https://rich-blue-shrimp-wig.cyclic.app/auth/login', {
-        email: email,
-        password: password,
-      })
-      .then(response => {
-        setIsLoading(false);
-        SweetAlert.showAlertWithOptions({
-          title: 'Sucesso',
-          subTitle: 'Login realizado com sucesso!',
-          confirmButtonTitle: 'OK',
-          confirmButtonColor: '#EFC81A',
-          style: 'success',
-        });
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
 
-        // Login success
-        setToken(response.data.data.token);
-        setUser(response.data.data.user);
 
-        // Redirect to the desired screen
-        navigation.navigate('Main');
-      })
-      .catch(error => {
-        setIsLoading(false);
-        SweetAlert.showAlertWithOptions({
-          title: 'Erro',
-          subTitle: 'Email ou senha incorretos',
-          confirmButtonTitle: 'OK',
-          confirmButtonColor: '#EFC81A',
-          style: 'error',
-        });
-      });
+    navigation.navigate('Home');
+
   };
 
   const backgroundImage = { uri: 'https://wallpapers.com/images/featured/plano-de-fundo-de-culinaria-1o4w0sphb7r1fgx9.jpg' };

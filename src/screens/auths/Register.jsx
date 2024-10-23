@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text, TextInput, Pressable, TouchableHighlight, ImageBackground } from 'react-native';
-import axios from 'axios';
-import SweetAlert from 'react-native-sweet-alert';
 
 function RegisterScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -17,42 +15,10 @@ function RegisterScreen({ navigation }) {
 
   const handleRegister = () => {
     if (password !== confirmPassword) {
-      SweetAlert.showAlertWithOptions({
-        title: 'Erro',
-        subTitle: 'A senha e a confirmação da senha não coincidem',
-        confirmButtonTitle: 'OK',
-        confirmButtonColor: '#EFC81A',
-        style: 'error',
-      });
       return;
     }
 
-    axios
-      .post('https://rich-blue-shrimp-wig.cyclic.app/auth/register', {
-        email: email,
-        fullname: name,
-        password: password,
-      })
-      .then(_ => {
-        SweetAlert.showAlertWithOptions({
-          title: 'Sucesso',
-          subTitle: 'Cadastro realizado com sucesso',
-          confirmButtonTitle: 'OK',
-          confirmButtonColor: '#EFC81A',
-          style: 'success',
-        });
-        navigation.navigate('Login');
-      })
-      .catch(error => {
-        console.error('Erro:', error);
-        SweetAlert.showAlertWithOptions({
-          title: 'Erro',
-          subTitle: 'Falha no cadastro',
-          confirmButtonTitle: 'OK',
-          confirmButtonColor: '#EFC81A',
-          style: 'error',
-        });
-      });
+    navigation.navigate('Login');
   };
 
   const backgroundImage = { uri: 'https://wallpapers.com/images/featured/plano-de-fundo-de-culinaria-1o4w0sphb7r1fgx9.jpg' };

@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "./src/screens/HomeScreen";
+import Login from "./src/screens/auths/Login";
 import RegisterScreen from "./src/screens/auths/Register";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -60,7 +61,12 @@ function Main() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
