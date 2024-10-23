@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
-  Alert,
   ImageBackground,
   ScrollView,
   StyleSheet,
@@ -11,44 +10,61 @@ import { Card, Searchbar, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 function Home({ navigation }) {
+  const [recipes, setRecipes] = useState([]);
   const [recipesNew, setRecipesNew] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
 
-  const handleSubmitSearch = () => {
-    if (searchQuery !== "") {
-      navigation.navigate("ListRecipe", {
-        searchKeyword: searchQuery,
-        searchMode: "search",
-      });
-    } else {
-      Alert.alert("Please enter a search keyword");
-    }
-  };
+  const handleSubmitSearch = () => { };
 
   const categories = [
-    "Main Dish",
-    "Snack",
-    "Dessert",
-    "Salad",
-    "Beverage",
-    "Breakfast",
+    "Prato Principal",
+    "Lanche",
+    "Sobremesa",
+    "Salada",
+    "Bebida",
+    "Café da Manhã",
   ];
+  useEffect(() => {
+    response = [
+      {
+        title: "hahahah",
+        recipe_picture:
+          "https://img.freepik.com/free-photo/top-view-food-ingredients-with-pumpkin-soup_23-2148834714.jpg",
+        category: "Prato Principal"
+      }, {
+        title: "hahahah2",
+        recipe_picture:
+          "https://img.freepik.com/free-photo/top-view-food-ingredients-with-pumpkin-soup_23-2148834714.jpg",
+        category: "Prato Principal"
+      }, {
+        title: "hahahah3",
+        recipe_picture:
+          "https://img.freepik.com/free-photo/top-view-food-ingredients-with-pumpkin-soup_23-2148834714.jpg",
+        category: "Prato Principal"
+      },
+    ];
+
+    setTimeout(() => {
+      setRecipesNew(response);
+      setRecipes(response);
+    }, 500);
+  }, []);
 
   const getIconNameForCategory = (category) => {
     switch (category) {
-      case "Main Dish":
+      case "Prato Principal":
         return "food";
-      case "Snack":
+      case "Lanche":
         return "hamburger";
-      case "Dessert":
+      case "Sobremesa":
         return "cupcake";
-      case "Salad":
+      case "Salada":
         return "carrot";
-      case "Beverage":
+      case "Bebida":
         return "coffee";
-      case "Breakfast":
+      case "Café da Manhã":
         return "bread-slice";
       default:
         return "food";
@@ -59,7 +75,7 @@ function Home({ navigation }) {
     <ScrollView contentInsetAdjustmentBehavior="automatic">
       <View style={styles.container}>
         <Searchbar
-          placeholder="Search Pasta, Bread, etc"
+          placeholder="Buscar"
           onChangeText={onChangeSearch}
           value={searchQuery}
           style={styles.searchbar}
@@ -71,17 +87,16 @@ function Home({ navigation }) {
           )}
         />
 
-        {/* Popular Recipes */}
         <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Popular Recipes</Text>
+          <Text style={styles.sectionTitle}>Receitas populares</Text>
           <Text style={styles.sectionSubtitle}>
-            Check this out most liked recipes
+            Receitas mais curtidas
           </Text>
           <ScrollView horizontal>
-            {recipes.map((item, key) => (
+            {recipes.map(item => (
               <TouchableOpacity
-                key={key}
-                onPress={() => navigation.navigate("Detail", { recipe: item })}
+                key={item.title}
+                onPress={() => navigation.navigate("")}
               >
                 <ImageBackground
                   source={{ uri: item.recipe_picture }}
@@ -98,9 +113,7 @@ function Home({ navigation }) {
             ))}
           </ScrollView>
         </View>
-        {/* End of Popular Recipes */}
 
-        {/* New Recipes */}
         <View style={styles.sectionContainer}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Category</Text>
@@ -108,11 +121,11 @@ function Home({ navigation }) {
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={styles.recipeCategoryContainer}>
-              {categories.map((category, key) => (
-                <View style={styles.recipeCategory} key={key}>
+              {categories.map((category) => (
+                <View style={styles.recipeCategory} key={category}>
                   <TouchableOpacity onPress={() => onPressCategory(category)}>
                     <Icon
-                      name={getIconNameForCategory(category)} // Implement a function to map category to icon name
+                      name={getIconNameForCategory(category)}
                       size={50}
                       color="white"
                       style={styles.recipeCategoryAvatar}
@@ -124,22 +137,20 @@ function Home({ navigation }) {
             </View>
           </ScrollView>
         </View>
-        {/* End of New Recipes */}
 
-        {/* Popular For You */}
         <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>New Recipes</Text>
+          <Text style={styles.sectionTitle}>Novas receitas</Text>
           <Text style={styles.sectionSubtitle}>
-            Keep updated with new recipes
+            Receitas adicionadas recentemente
           </Text>
 
           <ScrollView horizontal>
-            {recipesNew.map((item, key) => (
-              <Card style={styles.popularRecipeCard} key={key}>
+            {recipesNew.map(item => (
+              <Card style={styles.popularRecipeCard} key={item.title}>
                 <TouchableOpacity
-                  key={key}
+                  key={item.title}
                   onPress={() =>
-                    navigation.navigate("Detail", { recipe: item })
+                    navigation.navigate("")
                   }
                 >
                   <Card.Cover
@@ -162,9 +173,8 @@ function Home({ navigation }) {
             ))}
           </ScrollView>
         </View>
-        {/* End of Popular For You */}
       </View>
-    </ScrollView>
+    </ScrollView >
   );
 }
 
