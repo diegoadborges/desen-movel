@@ -33,7 +33,7 @@ function RegisterScreen({ navigation }) {
         fullname: name,
         password: password,
       })
-      .then(response => {
+      .then(_ => {
         SweetAlert.showAlertWithOptions({
           title: 'Sucesso',
           subTitle: 'Cadastro realizado com sucesso',

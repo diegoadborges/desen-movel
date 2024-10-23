@@ -27,28 +27,46 @@ function Home({ navigation }) {
     "Café da Manhã",
   ];
   useEffect(() => {
-    response = [
+
+    recipesResponse = [
+      , {
+        title: "Tapioca de pizza",
+        recipe_picture:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfcgLmsPLBvCxzLPwfbvsfOPHrsYHReUpZHA&s",
+      }, {
+        title: "Strogonoff",
+        recipe_picture:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgbNX6ux-vMGoRAgShXxqk_j08gF3bXFEA6A&s",
+      },
       {
-        title: "hahahah",
+        title: "Pastel cremoso",
         recipe_picture:
-          "https://img.freepik.com/free-photo/top-view-food-ingredients-with-pumpkin-soup_23-2148834714.jpg",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqm-L58nuCz2dB8u13N8B_i4xU7ybW5qhXjQ&s",
+      }
+    ];
+
+    newRecipesResponse = [
+      {
+        title: "Ovo cozido",
+        recipe_picture:
+          "https://conteudo.imguol.com.br/c/entretenimento/52/2020/07/06/ovo-1594070430431_v2_1x1.jpg",
+        category: "Café da Manhã"
+      }, {
+        title: "Miojo com ovo 😋",
+        recipe_picture:
+          "https://i.ytimg.com/vi/8r0GkMe-I-Y/maxresdefault.jpg",
         category: "Prato Principal"
       }, {
-        title: "hahahah2",
+        title: "Brigadeiro",
         recipe_picture:
-          "https://img.freepik.com/free-photo/top-view-food-ingredients-with-pumpkin-soup_23-2148834714.jpg",
-        category: "Prato Principal"
-      }, {
-        title: "hahahah3",
-        recipe_picture:
-          "https://img.freepik.com/free-photo/top-view-food-ingredients-with-pumpkin-soup_23-2148834714.jpg",
-        category: "Prato Principal"
+          "https://i0.wp.com/blog.madrugashop.com/wp-content/uploads/2022/09/oqueebrisadeirocomofazeressareceitacanbica.jpg?fit=600%2C429&ssl=1",
+        category: "Sobremesa"
       },
     ];
 
     setTimeout(() => {
-      setRecipesNew(response);
-      setRecipes(response);
+      setRecipesNew(newRecipesResponse);
+      setRecipes(recipesResponse);
     }, 500);
   }, []);
 
