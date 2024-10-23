@@ -100,7 +100,7 @@ function Home({ navigation }) {
           onSubmitEditing={handleSubmitSearch}
           icon={() => (
             <TouchableOpacity onPress={handleSubmitSearch}>
-              <Icon name="magnify" size={24} color="#EEC302" />
+              <Icon name="magnify" size={24} color="#ed8115" />
             </TouchableOpacity>
           )}
         />
@@ -167,10 +167,7 @@ function Home({ navigation }) {
               <Card style={styles.popularRecipeCard} key={item.title}>
                 <TouchableOpacity
                   key={item.title}
-                  onPress={() =>
-                    navigation.navigate("")
-                  }
-                >
+                  onPress={() => navigation.navigate('')}>
                   <Card.Cover
                     source={{ uri: item.recipe_picture }}
                     style={styles.popularRecipeCardImage}
@@ -252,7 +249,7 @@ const styles = StyleSheet.create({
   recipeCategoryAvatar: {
     borderRadius: 20,
     padding: 10,
-    backgroundColor: "#EFC81A",
+    backgroundColor: "#ed8115",
   },
   recipeCategoryTitle: {
     textAlign: "center",

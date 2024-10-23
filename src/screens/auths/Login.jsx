@@ -23,7 +23,7 @@ function LoginScreen({ navigation }) {
 
   };
 
-  const backgroundImage = { uri: 'https://wallpapers.com/images/featured/plano-de-fundo-de-culinaria-1o4w0sphb7r1fgx9.jpg' };
+  const backgroundImage = { uri: 'https://i.pinimg.com/236x/84/f2/1e/84f21eebd64c49fbb627065117af4ea1.jpg' };
 
   return (
     <ImageBackground source={backgroundImage} style={styles.container}>
@@ -33,7 +33,7 @@ function LoginScreen({ navigation }) {
       >
         <View style={styles.logoContainer}>
           <Text style={styles.title}>Bem-vindo!</Text>
-          <Text>Faça login na sua conta.</Text>
+          <Text style={styles.buttonText}>Faça login na sua conta.</Text>
         </View>
         <View style={styles.formContainer}>
           <TextInput

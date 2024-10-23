@@ -1,9 +1,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import HomeScreen from "./src/screens/HomeScreen";
+import AddRecipeScreen from "./src/screens/AddRecipeScreen";
 import Login from "./src/screens/auths/Login";
 import RegisterScreen from "./src/screens/auths/Register";
+import HomeScreen from "./src/screens/HomeScreen";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation } from "react-native-paper";
@@ -51,6 +52,15 @@ function Main() {
         options={{
           tabBarIcon: ({ color, size }) => {
             return <Icon name="home" size={size} color={color} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="AddRecipe"
+        component={AddRecipeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="plus-square" size={size} color={color} />;
           },
         }}
       />

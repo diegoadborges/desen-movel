@@ -21,7 +21,7 @@ function RegisterScreen({ navigation }) {
     navigation.navigate('Login');
   };
 
-  const backgroundImage = { uri: 'https://wallpapers.com/images/featured/plano-de-fundo-de-culinaria-1o4w0sphb7r1fgx9.jpg' };
+  const backgroundImage = { uri: 'https://i.pinimg.com/236x/84/f2/1e/84f21eebd64c49fbb627065117af4ea1.jpg' };
 
   return (
     <ImageBackground source={backgroundImage} style={styles.container}>
@@ -30,7 +30,7 @@ function RegisterScreen({ navigation }) {
         contentContainerStyle={styles.scrollViewContent}
       >
         <View style={styles.headerContainer}>
-          <Text style={styles.headerTitle}>Ana Maria Brega</Text>
+          <Text style={styles.headerTitle}>Registro</Text>
           <Text style={styles.subHeaderText}>Receitas para quem não sabe</Text>
         </View>
         <View style={styles.formContainer}>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     textAlign: 'center',
-    paddingBottom: 20,
+    paddingBottom: 150,
     color: 'white',
   },
   loginLink: {
