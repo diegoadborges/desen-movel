@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "./src/screens/HomeScreen";
+import RegisterScreen from "./src/screens/auths/Register";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomNavigation } from "react-native-paper";
@@ -60,18 +61,12 @@ function Main() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Login"
-          component={Main}
-          options={{ headerShown: false }}
-        />
+      <Stack.Navigator initialRouteName="Register">
         <Stack.Screen
           name="Register"
-          component={Main}
+          component={RegisterScreen}
           options={{ headerShown: false }}
         />
-
         <Stack.Screen
           name="Home"
           component={Main}

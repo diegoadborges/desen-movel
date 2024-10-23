@@ -59,13 +59,13 @@ function RegisterScreen({ navigation }) {
 
   return (
     <ImageBackground source={backgroundImage} style={styles.container}>
-      <ScrollView 
-        contentInsetAdjustmentBehavior="automatic" 
+      <ScrollView
+        contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.scrollViewContent}
       >
         <View style={styles.headerContainer}>
           <Text style={styles.headerTitle}>Ana Maria Brega</Text>
-          <Text style={styles.subHeaderText}>Receitas para quem não sabe cozinhar</Text>
+          <Text style={styles.subHeaderText}>Receitas para quem não sabe</Text>
         </View>
         <View style={styles.formContainer}>
           <TextInput
@@ -138,9 +138,9 @@ const styles = StyleSheet.create({
     color: '#EFC81A',
   },
   subHeaderText: {
-    color: 'white', 
+    color: 'white',
     textAlign: 'center',
-    marginTop: 5, 
+    marginTop: 5,
   },
   formContainer: {
     paddingBottom: 100,
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   loginText: {
     textAlign: 'center',
     paddingBottom: 20,
-    color: 'white', 
+    color: 'white',
   },
   loginLink: {
     color: '#EFC81A',
