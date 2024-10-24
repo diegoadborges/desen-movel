@@ -29,7 +29,7 @@ function Home({ navigation }) {
   useEffect(() => {
 
     recipesResponse = [
-      , {
+      {
         title: "Tapioca de pizza",
         recipe_picture:
           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfcgLmsPLBvCxzLPwfbvsfOPHrsYHReUpZHA&s",
@@ -134,7 +134,7 @@ function Home({ navigation }) {
 
         <View style={styles.sectionContainer}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Category</Text>
+            <Text style={styles.sectionTitle}>Categoria</Text>
           </View>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
