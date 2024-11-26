@@ -17,7 +17,15 @@ function Home({ navigation }) {
   const onChangeSearch = (query) => setSearchQuery(query);
   const handleSubmitSearch = () => {};
 
-  const categories = ["Prato Principal", "Sobremesa"];
+  const categories = [
+    "Prato Principal",
+    "Lanche",
+    "Sobremesa",
+    "Salada",
+    "Bebida",
+    "Café da Manhã",
+  ];
+
 
   useEffect(() => {
     const recipesResponse = [
@@ -72,9 +80,9 @@ function Home({ navigation }) {
         category: "Café da Manhã",
       },
       {
-        title: "Miojo com ovo 😋",
+        title: "Miojo com ovo",
         recipe_picture:
-          "https://i.ytimg.com/vi/8r0GkMe-I-Y/maxresdefault.jpg",
+          "https://images.mrcook.app/recipe-image/0191a604-16c0-7634-be77-caa33be743d3",
         category: "Prato Principal",
       },
       {
@@ -93,8 +101,18 @@ function Home({ navigation }) {
     switch (category) {
       case "Prato Principal":
         return "food";
+      case "Lanche":
+        return "hamburger";
       case "Sobremesa":
         return "cupcake";
+      case "Salada":
+        return "carrot";
+      case "Bebida":
+        return "coffee";
+      case "Café da Manhã":
+        return "bread-slice";
+      default:
+        return "food";
     }
   };
 

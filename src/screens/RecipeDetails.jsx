@@ -16,7 +16,7 @@ const RecipeDetails = ({ route }) => {
       recipe.instructions = "Coloque os ovos em uma panela com água. Deixe ferver por 10 minutos. Retire da água e sirva.";
     }
   
-    if (recipe.title === "Miojo com ovo 😋") {
+    if (recipe.title === "Miojo com ovo") {
       recipe.ingredients = [
         "1 pacote de miojo",
         "1 ovo",
