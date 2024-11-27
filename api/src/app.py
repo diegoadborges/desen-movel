@@ -4,9 +4,11 @@ from pydantic import ValidationError
 from db import init_db
 from routes import recipes, user
 from http import HTTPStatus
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+cors = CORS(app)
 
 init_db(app)
 app.register_blueprint(user.bp)
