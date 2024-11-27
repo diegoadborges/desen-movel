@@ -1,5 +1,6 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View, ImageBackground } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Text, Card } from "react-native-paper";
 
 function CategoryScreen({ route, navigation }) {
@@ -7,29 +8,9 @@ function CategoryScreen({ route, navigation }) {
   const [recipesInCategory, setRecipesInCategory] = useState([]);
 
   useEffect(() => {
-    const allRecipes = [
-      {
-        title: "Tapioca de Pizza",
-        recipe_picture:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfcgLmsPLBvCxzLPwfbvsfOPHrsYHReUpZHA&s",
-        category: "Prato Principal",
-      },
-      {
-        title: "Strogonoff",
-        recipe_picture:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgbNX6ux-vMGoRAgShXxqk_j08gF3bXFEA6A&s",
-        category: "Prato Principal",
-      },
-      {
-        title: "Brigadeiro",
-        recipe_picture:
-          "https://i0.wp.com/blog.madrugashop.com/wp-content/uploads/2022/09/oqueebrisadeirocomofazeressareceitacanbica.jpg?fit=600%2C429&ssl=1",
-        category: "Sobremesa",
-      },
-    ];
-
-    const filteredRecipes = allRecipes.filter(recipe => recipe.category === category);
-    setRecipesInCategory(filteredRecipes);
+    axios.get(`${API_URL}/recipes?category=${category}`).then(response =>
+      setRecipesInCategory(response.data)
+    )
   }, [category]);
 
   return (
@@ -43,7 +24,7 @@ function CategoryScreen({ route, navigation }) {
                 navigation.navigate("RecipeDetails", { recipe: item })
               }
             >
-              <Card.Cover source={{ uri: item.recipe_picture }} style={styles.recipeCardImage} />
+              <Card.Cover source={{ uri: item.image_url }} style={styles.recipeCardImage} />
               <Card.Content style={styles.recipeCardContent}>
                 <Text style={styles.recipeCardTitle}>{item.title}</Text>
               </Card.Content>
