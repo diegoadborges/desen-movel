@@ -1,5 +1,5 @@
 from datetime import timezone
-from typing import List
+from typing import Any, Dict, List
 from flask import Blueprint, request
 from flask.helpers import datetime
 from pydantic import BaseModel, Field, ValidationError, field_validator
@@ -60,7 +60,7 @@ def get_recipe_by_id(recipe_id: int):
 def get_recipes():
     query = db.session.query(Recipe)
 
-    order_by_fields = {"created_at": Recipe.created_at}
+    order_by_fields: Dict[Any, Any] = {"created_at": Recipe.created_at}
 
     filter_by_fields = {"category": Recipe.category, "id": Recipe.id}
 
