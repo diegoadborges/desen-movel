@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text, TextInput, Pressable, TouchableHighlight, ImageBackground } from 'react-native';
+import API_URL from '../../config';
 
 function RegisterScreen({ navigation }) {
   const [name, setName] = useState('');
@@ -18,7 +20,16 @@ function RegisterScreen({ navigation }) {
       return;
     }
 
-    navigation.navigate('Login');
+
+    axios.post(`${API_URL}/auth/register`, { email, password, name })
+      .then(response => {
+        if (response.status == 201) { // TODO error message
+          navigation.navigate('Login');
+          return
+        }
+      }
+      )
+
   };
 
   const backgroundImage = { uri: 'https://i.pinimg.com/236x/84/f2/1e/84f21eebd64c49fbb627065117af4ea1.jpg' };

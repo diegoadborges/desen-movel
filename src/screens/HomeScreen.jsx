@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
 import {
   ImageBackground,
@@ -15,7 +16,7 @@ function Home({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
-  const handleSubmitSearch = () => {};
+  const handleSubmitSearch = () => { };
 
   const categories = [
     "Prato Principal",
@@ -28,73 +29,13 @@ function Home({ navigation }) {
 
 
   useEffect(() => {
-    const recipesResponse = [
-      {
-        title: "Tapioca de Pizza",
-        recipe_picture:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfcgLmsPLBvCxzLPwfbvsfOPHrsYHReUpZHA&s",
-        ingredients: [
-          "1 xícara de goma de tapioca",
-          "150g de queijo mussarela",
-          "100g de presunto",
-          "Molho de tomate",
-          "Orégano",
-        ],
-        instructions: "Prepare a goma de tapioca e adicione os ingredientes de sua preferência.",
-      },
-      {
-        title: "Strogonoff",
-        recipe_picture:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgbNX6ux-vMGoRAgShXxqk_j08gF3bXFEA6A&s",
-        ingredients: [
-          "500g de peito de frango ou carne bovina",
-          "1 lata de creme de leite",
-          "1 lata de molho de tomate",
-          "Cebola e alho",
-          "1 colher de sopa de mostarda",
-        ],
-        instructions:
-          "Corte o frango ou carne em tiras e refogue com cebola e alho. Adicione molho de tomate, mostarda, e o creme de leite. Cozinhe até ficar cremoso.",
-      },
-      {
-        title: "Pastel Cremoso",
-        recipe_picture:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqm-L58nuCz2dB8u13N8B_i4xU7ybW5qhXjQ&s",
-        ingredients: [
-          "1 pacote de massa para pastel",
-          "200g de chocolate meio amargo",
-          "100g de leite condensado",
-          "1 colher de sopa de manteiga",
-          "Açúcar para polvilhar",
-        ],
-        instructions:
-          "Derreta o chocolate com a manteiga e misture com o leite condensado. Recheie a massa com o chocolate derretido e feche o pastel. Frite até dourar e polvilhe açúcar por cima.",
-      },
-    ];
+    axios.get(`${API_URL}/recipes`).then(response =>
+      setRecipes(response.data)
+    )
 
-    const newRecipesResponse = [
-      {
-        title: "Ovo cozido",
-        recipe_picture:
-          "https://conteudo.imguol.com.br/c/entretenimento/52/2020/07/06/ovo-1594070430431_v2_1x1.jpg",
-        category: "Café da Manhã",
-      },
-      {
-        title: "Miojo com ovo",
-        recipe_picture:
-          "https://images.mrcook.app/recipe-image/0191a604-16c0-7634-be77-caa33be743d3",
-        category: "Prato Principal",
-      },
-      {
-        title: "Brigadeiro",
-        recipe_picture:
-          "https://i0.wp.com/blog.madrugashop.com/wp-content/uploads/2022/09/oqueebrisadeirocomofazeressareceitacanbica.jpg?fit=600%2C429&ssl=1",
-        category: "Sobremesa",
-      },
-    ];
-
-    setRecipesNew(newRecipesResponse);
-    setRecipes(recipesResponse);
+    axios.get(`${API_URL}/recipes?order_by=created_at)`).then(response =>
+      setRecipesNew(response.data)
+    )
   }, []);
 
   const getIconNameForCategory = (category) => {
@@ -138,13 +79,13 @@ function Home({ navigation }) {
           <ScrollView horizontal>
             {recipes.map((item) => (
               <TouchableOpacity
-                key={item.title}
+                key={item.id}
                 onPress={() =>
                   navigation.navigate("RecipeDetails", { recipe: item })
                 }
               >
                 <ImageBackground
-                  source={{ uri: item.recipe_picture }}
+                  source={{ uri: item.image_url }}
                   style={styles.recipeCard}
                   imageStyle={styles.recipeCardImage}
                 >
@@ -191,13 +132,13 @@ function Home({ navigation }) {
 
           <ScrollView horizontal>
             {recipesNew.map((item) => (
-              <Card style={styles.popularRecipeCard} key={item.title}>
+              <Card style={styles.popularRecipeCard} key={item.id}>
                 <TouchableOpacity
-                  key={item.title}
+                  key={item.id}
                   onPress={() => navigation.navigate("RecipeDetails", { recipe: item })}
                 >
                   <Card.Cover
-                    source={{ uri: item.recipe_picture }}
+                    source={{ uri: item.image_url }}
                     style={styles.popularRecipeCardImage}
                   />
                   <Card.Content style={styles.popularRecipeCardContent}>
