@@ -36,7 +36,7 @@ def login_user():
     if not compare_password(req_body.password, user.password):
         return {"error": "Email or password invalid"}, 401
 
-    return "", 200
+    return user.to_dict()
 
 
 @bp.post("/register")

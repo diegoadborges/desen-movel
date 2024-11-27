@@ -2,7 +2,7 @@ from typing import Any, Dict, Tuple
 from flask import Flask
 from pydantic import ValidationError
 from db import init_db
-from routes import user
+from routes import recipes, user
 from http import HTTPStatus
 
 
@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 init_db(app)
 app.register_blueprint(user.bp)
+app.register_blueprint(recipes.bp)
 
 
 def validation_error_handler(e: ValidationError) -> Tuple[Dict[str, Any], int]:
