@@ -1,5 +1,7 @@
+import axios from 'axios';
+import API_URL from "../../config.js"
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Text, TextInput, Pressable, TouchableHighlight, ImageBackground, Alert } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, TextInput, Pressable, TouchableHighlight, ImageBackground } from 'react-native';
 
 function LoginScreen({ navigation }) {
   const [email, onChangeEmail] = useState('');
@@ -14,13 +16,14 @@ function LoginScreen({ navigation }) {
   const handleLogin = () => {
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-
-
-    navigation.navigate('Home');
-
+    axios.post(`${API_URL}/auth/login`, { "email": email, "password": password })
+      .then(response => {
+        if (response.status == 401) { // TODO error message
+          return
+        }
+        navigation.navigate('Home');
+      }
+      )
   };
 
   const backgroundImage = { uri: 'https://i.pinimg.com/236x/84/f2/1e/84f21eebd64c49fbb627065117af4ea1.jpg' };
