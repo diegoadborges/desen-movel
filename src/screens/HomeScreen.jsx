@@ -15,8 +15,7 @@ function Home({ navigation }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const onChangeSearch = (query) => setSearchQuery(query);
-
-  const handleSubmitSearch = () => { };
+  const handleSubmitSearch = () => {};
 
   const categories = [
     "Prato Principal",
@@ -26,30 +25,76 @@ function Home({ navigation }) {
     "Bebida",
     "Café da Manhã",
   ];
+
+
   useEffect(() => {
-    response = [
+    const recipesResponse = [
       {
-        title: "hahahah",
+        title: "Tapioca de Pizza",
         recipe_picture:
-          "https://img.freepik.com/free-photo/top-view-food-ingredients-with-pumpkin-soup_23-2148834714.jpg",
-        category: "Prato Principal"
-      }, {
-        title: "hahahah2",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfcgLmsPLBvCxzLPwfbvsfOPHrsYHReUpZHA&s",
+        ingredients: [
+          "1 xícara de goma de tapioca",
+          "150g de queijo mussarela",
+          "100g de presunto",
+          "Molho de tomate",
+          "Orégano",
+        ],
+        instructions: "Prepare a goma de tapioca e adicione os ingredientes de sua preferência.",
+      },
+      {
+        title: "Strogonoff",
         recipe_picture:
-          "https://img.freepik.com/free-photo/top-view-food-ingredients-with-pumpkin-soup_23-2148834714.jpg",
-        category: "Prato Principal"
-      }, {
-        title: "hahahah3",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgbNX6ux-vMGoRAgShXxqk_j08gF3bXFEA6A&s",
+        ingredients: [
+          "500g de peito de frango ou carne bovina",
+          "1 lata de creme de leite",
+          "1 lata de molho de tomate",
+          "Cebola e alho",
+          "1 colher de sopa de mostarda",
+        ],
+        instructions:
+          "Corte o frango ou carne em tiras e refogue com cebola e alho. Adicione molho de tomate, mostarda, e o creme de leite. Cozinhe até ficar cremoso.",
+      },
+      {
+        title: "Pastel Cremoso",
         recipe_picture:
-          "https://img.freepik.com/free-photo/top-view-food-ingredients-with-pumpkin-soup_23-2148834714.jpg",
-        category: "Prato Principal"
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqm-L58nuCz2dB8u13N8B_i4xU7ybW5qhXjQ&s",
+        ingredients: [
+          "1 pacote de massa para pastel",
+          "200g de chocolate meio amargo",
+          "100g de leite condensado",
+          "1 colher de sopa de manteiga",
+          "Açúcar para polvilhar",
+        ],
+        instructions:
+          "Derreta o chocolate com a manteiga e misture com o leite condensado. Recheie a massa com o chocolate derretido e feche o pastel. Frite até dourar e polvilhe açúcar por cima.",
       },
     ];
 
-    setTimeout(() => {
-      setRecipesNew(response);
-      setRecipes(response);
-    }, 500);
+    const newRecipesResponse = [
+      {
+        title: "Ovo cozido",
+        recipe_picture:
+          "https://conteudo.imguol.com.br/c/entretenimento/52/2020/07/06/ovo-1594070430431_v2_1x1.jpg",
+        category: "Café da Manhã",
+      },
+      {
+        title: "Miojo com ovo",
+        recipe_picture:
+          "https://images.mrcook.app/recipe-image/0191a604-16c0-7634-be77-caa33be743d3",
+        category: "Prato Principal",
+      },
+      {
+        title: "Brigadeiro",
+        recipe_picture:
+          "https://i0.wp.com/blog.madrugashop.com/wp-content/uploads/2022/09/oqueebrisadeirocomofazeressareceitacanbica.jpg?fit=600%2C429&ssl=1",
+        category: "Sobremesa",
+      },
+    ];
+
+    setRecipesNew(newRecipesResponse);
+    setRecipes(recipesResponse);
   }, []);
 
   const getIconNameForCategory = (category) => {
@@ -82,21 +127,21 @@ function Home({ navigation }) {
           onSubmitEditing={handleSubmitSearch}
           icon={() => (
             <TouchableOpacity onPress={handleSubmitSearch}>
-              <Icon name="magnify" size={24} color="#EEC302" />
+              <Icon name="magnify" size={24} color="#ed8115" />
             </TouchableOpacity>
           )}
         />
 
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Receitas populares</Text>
-          <Text style={styles.sectionSubtitle}>
-            Receitas mais curtidas
-          </Text>
+          <Text style={styles.sectionSubtitle}>Receitas mais curtidas</Text>
           <ScrollView horizontal>
-            {recipes.map(item => (
+            {recipes.map((item) => (
               <TouchableOpacity
                 key={item.title}
-                onPress={() => navigation.navigate("")}
+                onPress={() =>
+                  navigation.navigate("RecipeDetails", { recipe: item })
+                }
               >
                 <ImageBackground
                   source={{ uri: item.recipe_picture }}
@@ -116,7 +161,7 @@ function Home({ navigation }) {
 
         <View style={styles.sectionContainer}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>Category</Text>
+            <Text style={styles.sectionTitle}>Categorias</Text>
           </View>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -145,13 +190,11 @@ function Home({ navigation }) {
           </Text>
 
           <ScrollView horizontal>
-            {recipesNew.map(item => (
+            {recipesNew.map((item) => (
               <Card style={styles.popularRecipeCard} key={item.title}>
                 <TouchableOpacity
                   key={item.title}
-                  onPress={() =>
-                    navigation.navigate("")
-                  }
+                  onPress={() => navigation.navigate("RecipeDetails", { recipe: item })}
                 >
                   <Card.Cover
                     source={{ uri: item.recipe_picture }}
@@ -161,10 +204,7 @@ function Home({ navigation }) {
                     <Text style={styles.popularRecipeCardTitle}>
                       {item.title}
                     </Text>
-                    <Text
-                      style={styles.popularRecipeCardBody}
-                      numberOfLines={1}
-                    >
+                    <Text style={styles.popularRecipeCardBody} numberOfLines={1}>
                       {item.category}
                     </Text>
                   </Card.Content>
@@ -174,7 +214,7 @@ function Home({ navigation }) {
           </ScrollView>
         </View>
       </View>
-    </ScrollView >
+    </ScrollView>
   );
 }
 
@@ -190,10 +230,6 @@ const styles = StyleSheet.create({
   sectionContainer: {
     marginBottom: 35,
   },
-  sectionHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: "bold",
@@ -202,9 +238,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "200",
     marginBottom: 10,
-  },
-  sectionLink: {
-    color: "#6D61F2",
   },
   recipeCard: {
     height: 150,
@@ -234,7 +267,7 @@ const styles = StyleSheet.create({
   recipeCategoryAvatar: {
     borderRadius: 20,
     padding: 10,
-    backgroundColor: "#EFC81A",
+    backgroundColor: "#ed8115",
   },
   recipeCategoryTitle: {
     textAlign: "center",
