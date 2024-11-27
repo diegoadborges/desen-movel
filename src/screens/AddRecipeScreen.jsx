@@ -1,14 +1,31 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, View } from 'react-native';
 import { TextInput, Button, Title } from 'react-native-paper';
 import { SelectList } from 'react-native-dropdown-select-list'
+import { FlatList } from 'react-native-web';
 
 const AddRecipeScreen = ({ navigation }) => {
   const [recipeTitle, setRecipeTitle] = useState('');
   const [category, setCategory] = React.useState('');
-  const [ingredients, setIngredients] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [inputStrings, setInputStrings] = useState(['']);
+
+
+  const addInputField = () => {
+    setInputStrings([...inputStrings, '']);
+  };
+
+  const updateInputField = (index, text) => {
+    const updatedInputs = [...inputStrings];
+    updatedInputs[index] = text;
+    setInputStrings(updatedInputs);
+  };
+
+  const removeInputField = (index) => {
+    const filteredInputs = inputStrings.filter((_, i) => i !== index);
+    setInputStrings(filteredInputs);
+  };
 
 
   const categories = [
@@ -23,21 +40,35 @@ const AddRecipeScreen = ({ navigation }) => {
   const handleSubmit = () => {
     setIsLoading(true);
 
-    const formData = new FormData();
-    formData.append('title', recipeTitle);
-    formData.append('category', category);
-    formData.append('videoLink', imageUrl);
-    formData.append('ingredients', ingredients);
-
-
     setTimeout(() => {
       setIsLoading(false);
       navigation.navigate('Home')
       setRecipeTitle('');
-      setIngredients('');
       setImageUrl('');
     }, 500);
   };
+  const renderInputField = ({ item, index }) => (
+    <View style={styles.inputContainer}>
+      <TextInput
+        style={styles.input}
+        value={item}
+        onChangeText={(text) => updateInputField(index, text)}
+        placeholder={"Ingrediente"}
+      />
+      <Button
+        style={styles.button}
+        mode="contained"
+        onPress={() => addInputField(index)}
+      >ADD</Button>
+      {inputStrings.length > 1 && (
+        <Button
+          style={styles.button}
+          mode="contained"
+          onPress={() => removeInputField(index)}
+        >DEL</Button>
+      )}
+    </View>
+  );
 
 
   return (
@@ -63,18 +94,7 @@ const AddRecipeScreen = ({ navigation }) => {
         save="value"
       />
       <TextInput
-        label="Ingredientes"
-        value={ingredients}
-        onChangeText={text => setIngredients(text)}
-        style={styles.input}
-        multiline
-        numberOfLines={7}
-        mode="outlined"
-        outlineColor='#EFC81A'
-        activeOutlineColor='#EFC81A'
-      />
-      <TextInput
-        label="Link do video"
+        label="Link da foto"
         value={imageUrl}
         onChangeText={text => setImageUrl(text)}
         style={styles.input}
@@ -82,6 +102,11 @@ const AddRecipeScreen = ({ navigation }) => {
         outlineColor='#EFC81A'
         activeOutlineColor='#EFC81A'
 
+      />
+      <FlatList
+        data={inputStrings}
+        renderItem={renderInputField}
+        keyExtractor={(_, index) => index.toString()}
       />
       <Button
         mode="contained"
@@ -92,8 +117,11 @@ const AddRecipeScreen = ({ navigation }) => {
         {isLoading ? 'Enviando...' : 'Enviar'}
       </Button>
     </ScrollView>
+
   );
 };
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -126,6 +154,11 @@ const styles = StyleSheet.create({
     borderColor: '#EEC242',
     borderRadius: 30,
     alignSelf: 'center',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
   },
 });
 
