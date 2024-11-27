@@ -9,3 +9,5 @@ RUN pip install --upgrade pip
 RUN pip install  --no-cache-dir --upgrade --force-reinstall  -r /app/requirements.txt
 
 COPY ./src .
+
+ENTRYPOINT ["flask", "run", "--host=0.0.0.0", "--port=8080", "--debug"]
