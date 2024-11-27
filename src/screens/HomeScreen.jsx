@@ -26,7 +26,6 @@ function Home({ navigation }) {
     "Café da Manhã",
   ];
 
-
   useEffect(() => {
     const recipesResponse = [
       {
@@ -114,6 +113,10 @@ function Home({ navigation }) {
       default:
         return "food";
     }
+  };
+
+  const onPressCategory = (category) => {
+    navigation.navigate("CategoryScreen", { category });
   };
 
   return (
