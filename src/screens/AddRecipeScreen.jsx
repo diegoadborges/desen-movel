@@ -7,7 +7,7 @@ const AddRecipeScreen = ({ navigation }) => {
   const [recipeTitle, setRecipeTitle] = useState('');
   const [category, setCategory] = React.useState('');
   const [ingredients, setIngredients] = useState('');
-  const [videoLink, setVideoLink] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -20,16 +20,14 @@ const AddRecipeScreen = ({ navigation }) => {
     { "key": "6", "value": "Café da Manhã" }
   ]
 
-
-
   const handleSubmit = () => {
     setIsLoading(true);
 
     const formData = new FormData();
     formData.append('title', recipeTitle);
     formData.append('category', category);
+    formData.append('videoLink', imageUrl);
     formData.append('ingredients', ingredients);
-    formData.append('videoLink', videoLink);
 
 
     setTimeout(() => {
@@ -37,7 +35,7 @@ const AddRecipeScreen = ({ navigation }) => {
       navigation.navigate('Home')
       setRecipeTitle('');
       setIngredients('');
-      setVideoLink('');
+      setImageUrl('');
     }, 500);
   };
 
@@ -77,8 +75,8 @@ const AddRecipeScreen = ({ navigation }) => {
       />
       <TextInput
         label="Link do video"
-        value={videoLink}
-        onChangeText={text => setVideoLink(text)}
+        value={imageUrl}
+        onChangeText={text => setImageUrl(text)}
         style={styles.input}
         mode="outlined"
         outlineColor='#EFC81A'
