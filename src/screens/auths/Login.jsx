@@ -1,29 +1,37 @@
 import axios from 'axios';
 import API_URL from "../../config.js"
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, Text, TextInput, Pressable, TouchableHighlight, ImageBackground } from 'react-native';
+import { StyleSheet, ScrollView, View, Text, TextInput, Pressable, TouchableHighlight, ImageBackground, Alert } from 'react-native';
+import Error from "../../components/error.jsx"
 
 function LoginScreen({ navigation }) {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
   const [isEmailActive, setIsEmailActive] = useState(false);
   const [isPasswordActive, setIsPasswordActive] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState("");
 
   const inputEmailStyle = isEmailActive ? styles.inputActive : styles.input;
   const inputPasswordStyle = isPasswordActive ? styles.inputActive : styles.input;
 
   const handleLogin = () => {
+    setError(null);
     setIsLoading(true);
 
     axios.post(`${API_URL}/auth/login`, { "email": email, "password": password })
-      .then(response => {
-        if (response.status == 401) { // TODO error message
-          return
-        }
+      .then(() => {
         navigation.navigate('Home');
       }
-      )
+      ).catch(err => {
+        console.log(err.response.status)
+        if (err.response.status == 400) {
+          setError("Entrada de texto inválida")
+        }
+        if (err.response.status == 401) {
+          setError("Usuário ou senha incorretos")
+        }
+      })
   };
 
   const backgroundImage = { uri: 'https://i.pinimg.com/236x/84/f2/1e/84f21eebd64c49fbb627065117af4ea1.jpg' };
@@ -63,6 +71,9 @@ function LoginScreen({ navigation }) {
               </View>
             </TouchableHighlight>
           </View>
+          {error ? (
+            <Error message={error} />
+          ) : <View />}
         </View>
         <Text style={styles.signUpText}>
           Não tem uma conta?{' '}

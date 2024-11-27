@@ -7,17 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Card, Searchbar, Text } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useFocusEffect } from '@react-navigation/native';
 
 function Home({ navigation }) {
   const [recipes, setRecipes] = useState([]);
   const [recipesNew, setRecipesNew] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const onChangeSearch = (query) => setSearchQuery(query);
-  const handleSubmitSearch = () => { };
 
   const categories = [
     "Prato Principal",
@@ -65,19 +61,6 @@ function Home({ navigation }) {
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic">
       <View style={styles.container}>
-        <Searchbar
-          placeholder="Buscar"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={styles.searchbar}
-          onSubmitEditing={handleSubmitSearch}
-          icon={() => (
-            <TouchableOpacity onPress={handleSubmitSearch}>
-              <Icon name="magnify" size={24} color="#ed8115" />
-            </TouchableOpacity>
-          )}
-        />
-
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Explore</Text>
           <ScrollView horizontal>
