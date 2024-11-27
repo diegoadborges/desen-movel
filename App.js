@@ -7,7 +7,8 @@ import AddRecipeScreen from "./src/screens/AddRecipeScreen";
 import Login from "./src/screens/auths/Login";
 import RegisterScreen from "./src/screens/auths/Register";
 import HomeScreen from "./src/screens/HomeScreen";
-import RecipeDetails from "./src/screens/RecipeDetails"; // Importando RecipeDetails
+import RecipeDetails from "./src/screens/RecipeDetails"; 
+import CategoryScreen from "./src/screens/CategoryScreen"; 
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -60,6 +61,11 @@ function App() {
           name="RecipeDetails"
           component={RecipeDetails}
           options={{ headerShown: true, title: "Detalhes da Receita" }}
+        />
+        <Stack.Screen
+          name="CategoryScreen"
+          component={CategoryScreen}
+          options={{ headerShown: true, title: "Categoria" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
