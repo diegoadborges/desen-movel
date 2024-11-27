@@ -3,28 +3,31 @@ import { StyleSheet, ScrollView, View } from 'react-native';
 import { TextInput, Button, Title } from 'react-native-paper';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { FlatList } from 'react-native-web';
+import axios from 'axios';
 
 const AddRecipeScreen = ({ navigation }) => {
-  const [recipeTitle, setRecipeTitle] = useState('');
+  const [title, setTitle] = useState('');
   const [category, setCategory] = React.useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [instructions, setInstructions] = useState('');
+  const [ingredients, setIngredients] = useState(['']);
   const [isLoading, setIsLoading] = useState(false);
-  const [inputStrings, setInputStrings] = useState(['']);
 
 
   const addInputField = () => {
-    setInputStrings([...inputStrings, '']);
+    setIngredients([...ingredients, '']);
   };
 
   const updateInputField = (index, text) => {
-    const updatedInputs = [...inputStrings];
+    const updatedInputs = [...ingredients];
     updatedInputs[index] = text;
-    setInputStrings(updatedInputs);
+    setIngredients(updatedInputs);
+    console.log(ingredients)
   };
 
   const removeInputField = (index) => {
-    const filteredInputs = inputStrings.filter((_, i) => i !== index);
-    setInputStrings(filteredInputs);
+    const filteredInputs = ingredients.filter((_, i) => i !== index);
+    setIngredients(filteredInputs);
   };
 
 
@@ -40,12 +43,20 @@ const AddRecipeScreen = ({ navigation }) => {
   const handleSubmit = () => {
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-      navigation.navigate('Home')
-      setRecipeTitle('');
+    axios.post(`${API_URL}/recipes`, { category, title, ingredients, image_url: imageUrl, instructions }).then(respose => {
+      if (respose.status != 200) {
+        setIsLoading(false)
+        return
+      }
+      setIsLoading(false)
+      setCategory('')
+      setTitle('');
       setImageUrl('');
-    }, 500);
+      setInstructions('');
+      navigation.navigate('Home')
+    })
+
+
   };
   const renderInputField = ({ item, index }) => (
     <View style={styles.inputContainer}>
@@ -60,7 +71,7 @@ const AddRecipeScreen = ({ navigation }) => {
         mode="contained"
         onPress={() => addInputField(index)}
       >ADD</Button>
-      {inputStrings.length > 1 && (
+      {ingredients.length > 1 && (
         <Button
           style={styles.button}
           mode="contained"
@@ -76,9 +87,9 @@ const AddRecipeScreen = ({ navigation }) => {
       <Title style={styles.title}>Adicione sua receita</Title>
       <TextInput
         label="Título da receita"
-        value={recipeTitle}
+        value={title}
         mode="outlined"
-        onChangeText={text => setRecipeTitle(text)}
+        onChangeText={text => setTitle(text)}
         style={styles.input}
         outlineColor='#EFC81A'
         activeOutlineColor='#EFC81A'
@@ -101,10 +112,18 @@ const AddRecipeScreen = ({ navigation }) => {
         mode="outlined"
         outlineColor='#EFC81A'
         activeOutlineColor='#EFC81A'
-
+      />
+      <TextInput
+        label="Instruções"
+        value={instructions}
+        onChangeText={text => setInstructions(text)}
+        style={styles.input}
+        mode="outlined"
+        outlineColor='#EFC81A'
+        activeOutlineColor='#EFC81A'
       />
       <FlatList
-        data={inputStrings}
+        data={ingredients}
         renderItem={renderInputField}
         keyExtractor={(_, index) => index.toString()}
       />

@@ -3,6 +3,7 @@ from typing import Any, Dict, List
 from flask import Blueprint, request
 from flask.helpers import datetime
 from pydantic import BaseModel, Field, ValidationError, field_validator
+from sqlalchemy import desc
 from db.models import FoodCategory, Recipe
 from db import db
 
@@ -65,7 +66,10 @@ def get_recipes():
     filter_by_fields = {"category": Recipe.category, "id": Recipe.id}
 
     if (order_field := order_by_fields.get(request.args.get("order_by"))) is not None:
-        query = query.order_by(order_field)
+        if request.args.get("sort") == "desc":
+            query = query.order_by(desc(order_field))
+        else:
+            query = query.order_by(order_field)
 
     for k, v in filter_by_fields.items():
         val = request.args.get(k)

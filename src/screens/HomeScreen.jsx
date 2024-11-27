@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   ImageBackground,
   ScrollView,
@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Card, Searchbar, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { useFocusEffect } from '@react-navigation/native';
 
 function Home({ navigation }) {
   const [recipes, setRecipes] = useState([]);
@@ -27,15 +28,16 @@ function Home({ navigation }) {
     "Café da Manhã",
   ];
 
-  useEffect(() => {
+  useFocusEffect(() => {
     axios.get(`${API_URL}/recipes`).then(response =>
       setRecipes(response.data)
     )
 
-    axios.get(`${API_URL}/recipes?order_by=created_at)`).then(response =>
+    axios.get(`${API_URL}/recipes?order_by=created_at&sort=desc`).then(response =>
       setRecipesNew(response.data)
     )
-  }, []);
+    setTimeout(() => { }, 1000)
+  });
 
   const getIconNameForCategory = (category) => {
     switch (category) {
@@ -77,8 +79,7 @@ function Home({ navigation }) {
         />
 
         <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Receitas populares</Text>
-          <Text style={styles.sectionSubtitle}>Receitas mais curtidas</Text>
+          <Text style={styles.sectionTitle}>Explore</Text>
           <ScrollView horizontal>
             {recipes.map((item) => (
               <TouchableOpacity
