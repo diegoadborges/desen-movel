@@ -27,7 +27,6 @@ function Home({ navigation }) {
     "Café da Manhã",
   ];
 
-
   useEffect(() => {
     axios.get(`${API_URL}/recipes`).then(response =>
       setRecipes(response.data)
@@ -55,6 +54,10 @@ function Home({ navigation }) {
       default:
         return "food";
     }
+  };
+
+  const onPressCategory = (category) => {
+    navigation.navigate("CategoryScreen", { category });
   };
 
   return (
