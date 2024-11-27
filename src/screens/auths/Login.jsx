@@ -24,7 +24,6 @@ function LoginScreen({ navigation }) {
         navigation.navigate('Home');
       }
       ).catch(err => {
-        console.log(err.response.status)
         if (err.response.status == 400) {
           setError("Entrada de texto inválida")
         }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, Text, TextInput, Pressable, TouchableHighlight, ImageBackground } from 'react-native';
+import Error from '../../components/error';
 import API_URL from '../../config';
 
 function RegisterScreen({ navigation }) {
@@ -9,6 +10,7 @@ function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [activeInput, setActiveInput] = useState('');
+  const [error, setError] = useState("");
 
   const inputNameStyle = activeInput === 'name' ? styles.inputActive : styles.input;
   const inputEmailStyle = activeInput === 'email' ? styles.inputActive : styles.input;
@@ -16,19 +18,25 @@ function RegisterScreen({ navigation }) {
   const inputConfirmPasswordStyle = activeInput === 'confirmPassword' ? styles.inputActive : styles.input;
 
   const handleRegister = () => {
+    setError("")
     if (password !== confirmPassword) {
+      setError("Senhas não são iguais")
       return;
     }
 
 
     axios.post(`${API_URL}/auth/register`, { email, password, name })
-      .then(response => {
-        if (response.status == 201) { // TODO error message
-          navigation.navigate('Login');
-          return
-        }
+      .then(() => {
+        navigation.navigate('Login');
       }
-      )
+      ).catch(err => {
+        if (err.response.status == 400) {
+          setError("Entrada de texto inválida")
+        }
+        else if (err.response.status == 409) {
+          setError("Email já existe")
+        }
+      })
 
   };
 
@@ -82,6 +90,9 @@ function RegisterScreen({ navigation }) {
               </View>
             </TouchableHighlight>
           </View>
+          {error ? (
+            <Error message={error} />
+          ) : <View />}
         </View>
       </ScrollView>
       <Text style={styles.loginText}>
