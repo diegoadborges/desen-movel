@@ -53,6 +53,7 @@ const AddRecipeScreen = ({ navigation }) => {
       setTitle('');
       setImageUrl('');
       setInstructions('');
+      setIngredients([])
       navigation.navigate('Home')
     })
 

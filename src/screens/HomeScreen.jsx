@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ImageBackground,
   ScrollView,
@@ -24,16 +24,17 @@ function Home({ navigation }) {
     "Café da Manhã",
   ];
 
-  useFocusEffect(() => {
-    axios.get(`${API_URL}/recipes`).then(response =>
-      setRecipes(response.data)
-    )
+  useFocusEffect(
+    useCallback(() => {
+      axios.get(`${API_URL}/recipes`).then(response =>
+        setRecipes(response.data)
+      )
 
-    axios.get(`${API_URL}/recipes?order_by=created_at&sort=desc`).then(response =>
-      setRecipesNew(response.data)
-    )
-    setTimeout(() => { }, 1000)
-  });
+      axios.get(`${API_URL}/recipes?order_by=created_at&sort=desc`).then(response =>
+        setRecipesNew(response.data)
+      )
+    }, []))
+
 
   const getIconNameForCategory = (category) => {
     switch (category) {

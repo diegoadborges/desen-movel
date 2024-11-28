@@ -1,14 +1,14 @@
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome5";
 
 import AddRecipeScreen from "./src/screens/AddRecipeScreen";
 import Login from "./src/screens/auths/Login";
 import RegisterScreen from "./src/screens/auths/Register";
+import CategoryScreen from "./src/screens/CategoryScreen";
 import HomeScreen from "./src/screens/HomeScreen";
-import RecipeDetails from "./src/screens/RecipeDetails"; 
-import CategoryScreen from "./src/screens/CategoryScreen"; 
+import RecipeDetails from "./src/screens/RecipeDetails";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -24,14 +24,18 @@ function Main() {
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
-        name="AddRecipe"
+        name="Adicione receita"
         component={AddRecipeScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Icon name="plus-square" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="plus-square" size={size} color={color} />
+          ),
         }}
       />
     </Tab.Navigator>
